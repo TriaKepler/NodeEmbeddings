@@ -1,6 +1,7 @@
 import numpy as np
 import networkx as nx
 from scipy.sparse import csr_matrix
+from sklearn.metrics import pairwise_distances
 import os
 import os.path as osp
 
@@ -41,7 +42,7 @@ def similarity_matrix(graph, feat, sim_measures, weights):
     sim_matrices = []
     for measure, weight in zip(sim_measures, weights):
         if measure == 'shortest_path':
-            sim_matrix = floyd_warshall_numpy(graph)
+            sim_matrix = nx.floyd_warshall_numpy(graph)
             sim_matrix = 1 - np.divide(1, sim_matrix, out=np.zeros_like(sim_matrix), where=sim_matrix != 0)
         elif measure == 'features':
             sim_matrix = pairwise_distances(feat, metric='cosine')
