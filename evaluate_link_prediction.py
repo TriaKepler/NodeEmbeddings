@@ -91,15 +91,19 @@ def run_link_prediction(binary_operator, examples, labels, examples_model_select
 
 def train_evaluate_link_prediction(test_examples_labels, train_train_examples_labels, train_test_examples_labels, embeddings_train, embeddings_test):
     operator_hadamard = lambda u, v: u * v
+    operator_hadamard.__name__ = 'hadamard'
     operator_l1 = lambda u, v: np.abs(u - v)
+    operator_l1.__name__ = 'l1'
     operator_l2 = lambda u, v: (u - v) ** 2
+    operator_l2.__name__ = 'l2'
     operator_avg = lambda u, v: (u + v) / 2.0
+    operator_avg.__name__ = 'avg'
 
     binary_operators = [operator_hadamard, operator_l1, operator_l2, operator_avg]
     results = [run_link_prediction(op, *train_train_examples_labels, *train_test_examples_labels, embeddings_train) for op in binary_operators]
     best_result = max(results, key=lambda result: result["score"])
 
-    print(f"Best result from '{best_result['binary_operator'].__name__}'")
+    print(f"Best result from operator '{best_result['binary_operator'].__name__}'")
 
     print("Results over training set")
     pd.DataFrame(
