@@ -1,11 +1,12 @@
 from itertools import combinations
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 class CustomLoss(nn.Module):
-    def __init__(self, sim_matrix, device):
+    def __init__(self, sim_matrix):
         super(CustomLoss, self).__init__()
-        self.sim_matrix = torch.from_numpy(sim_matrix).to(device)
+        self.sim_matrix = torch.from_numpy(sim_matrix)
 
     def forward(self, inputs, indices):
         inputs_combn = combinations(inputs, 2)
