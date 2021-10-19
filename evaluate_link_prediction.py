@@ -111,6 +111,6 @@ def train_evaluate_link_prediction(test_examples_labels, train_train_examples_la
         test_score = evaluate_link_prediction_model(
         results[idx]["classifier"],
         *test_examples_labels,
-        embedding_test,
+        embeddings_test,
         op)
         print(f"ROC AUC score on test set using '{op.__name__}': {test_score}")
