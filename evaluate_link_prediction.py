@@ -106,10 +106,10 @@ def train_evaluate_link_prediction(test_examples_labels, train_train_examples_la
     print(f"Best result from operator '{best_result['binary_operator'].__name__}'")
 
     print("Results over training set")
-    pd.DataFrame(
+    print(pd.DataFrame(
         [(result["binary_operator"].__name__, result["score"]) for result in results],
         columns=("name", "ROC AUC score"),
-    ).set_index("name")
+    ).set_index("name"))
 
     for idx, op in enumerate(binary_operators):
         test_score = evaluate_link_prediction_model(
