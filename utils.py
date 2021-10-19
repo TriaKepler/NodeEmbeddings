@@ -1,0 +1,35 @@
+import numpy as np
+import networkx as nx
+from scipy.sparse import csr_matrix
+import os
+
+def load_graph(dataset):
+    datasets_links = {'lastfm':'https://www.dropbox.com/s/cslv0z7f3lkrbse/lastfm.npz', \
+    'cora':'', \
+    'blogcatalog':'', \
+    'flickr':''}
+    if dataset not in datasets_links:
+        raise Exception("Unkonwn dataset")
+    else:
+        os.system(f'wget {datasets_links[dataset]}')
+
+    print(f'Loading {dataset} dataset...')
+    with load(f'{dataset}.npz') as data:
+        graph = nx.from_scipy_sparse_matrix(data['adj'])
+        feat = csr_matrix.todense(data['feat'])
+        labels = data['label']
+    return graph, feat, labels
+
+def similarity_matrix(graph, feat, sim_measures, weights):
+    nodes_num = len(graph.nodes)
+    sim_matrices = []
+    for measure, weight in zip(sim_measures, weights):
+        if measure == 'shortest_path':
+            sim_matrix = floyd_warshall_numpy(graph)
+            sim_matrix = 1 - np.divide(1, sim_matrix, out=np.zeros_like(sim_matrix), where=sim_matrix != 0)
+        elif measure == 'features':
+            sim_matrix = pairwise_distances(feat, metric='cosine')
+        else:
+            raise Exception('Unkonwn similarity measure')
+        sim_matrices.append(weight * ft_matrix)
+    return sum(sim_matrices)
