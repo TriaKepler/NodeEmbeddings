@@ -2,6 +2,22 @@ import numpy as np
 import networkx as nx
 from scipy.sparse import csr_matrix
 import os
+import os.path as osp
+
+def load_npz(filepath):
+    filepath = osp.abspath(osp.expanduser(filepath))
+
+    if not filepath.endswith('.npz'):
+        filepath = filepath + '.npz'
+    if osp.isfile(filepath):
+        with np.load(filepath, allow_pickle=True) as loader:
+            loader = dict(loader)
+            for k, v in loader.items():
+                if v.dtype.kind in {'O', 'U'}:
+                    loader[k] = v.tolist()
+            return loader
+    else:
+        raise ValueError(f"{filepath} doesn't exist.")
 
 def load_graph(dataset):
     datasets_links = {'lastfm':'https://www.dropbox.com/s/cslv0z7f3lkrbse/lastfm.npz', \
@@ -14,10 +30,10 @@ def load_graph(dataset):
         os.system(f'wget {datasets_links[dataset]}')
 
     print(f'Loading {dataset} dataset...')
-    with load(f'{dataset}.npz') as data:
-        graph = nx.from_scipy_sparse_matrix(data['adj'])
-        feat = csr_matrix.todense(data['feat'])
-        labels = data['label']
+    data = load_npz(f'{dataset}.npz')
+    graph = nx.from_scipy_sparse_matrix(data['adj'])
+    feat = csr_matrix.todense(data['feat'])
+    labels = data['label']
     return graph, feat, labels
 
 def similarity_matrix(graph, feat, sim_measures, weights):
