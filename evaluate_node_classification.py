@@ -1,3 +1,4 @@
+import numpy as np
 from numpy import mean
 from numpy import std
 from sklearn.datasets import make_multilabel_classification
