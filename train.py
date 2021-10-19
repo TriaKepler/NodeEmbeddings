@@ -8,12 +8,12 @@ from node_emb.model import Model
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, batch_size=64, num_epochs=8, learning_rate=0.01):
-
     train_dataset = GraphDataset(graph=graph, size=size, labels=labels)
     train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
     model = Model((n_nodes, depth), classes_num).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     criterion = CustomLoss(sim_matrix, device).to(device)
+
     total_step = len(train_loader)
     for epoch in range(num_epochs):
         for batch_idx, out in enumerate(train_loader):
@@ -33,3 +33,5 @@ def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, 
             if (batch_idx + 1) % 10 == 0:
                 print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'
                       .format(epoch + 1, num_epochs, batch_idx + 1, total_step, loss.item()))
+
+    return model.embeddings.data.cpu().detach().numpy()
