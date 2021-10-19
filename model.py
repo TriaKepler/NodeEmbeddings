@@ -4,6 +4,7 @@ import torch.nn.functional as F
 
 class Model(nn.Module):
     def __init__(self, emb_size, classes_num):
+        super().__init__()
         self.embeddings = nn.Parameter(torch.randn(*emb_size))
         self.fc = nn.Linear(emb_size[0], classes_num)
 
