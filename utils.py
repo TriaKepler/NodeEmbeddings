@@ -32,10 +32,10 @@ def load_graph(dataset):
 
     print(f'Loading {dataset} dataset...')
     data = load_npz(f'{dataset}.npz')
-    graph = nx.from_scipy_sparse_matrix(data['adj'])
+    adj = nx.from_scipy_sparse_matrix(data['adj'])
     feat = csr_matrix.todense(data['feat'])
     labels = data['label']
-    return graph, feat, labels
+    return adj, feat, labels
 
 def similarity_matrix(graph, feat, sim_measures, weights):
     nodes_num = len(graph.nodes)
