@@ -22,7 +22,7 @@ def load_npz(filepath):
 
 def load_graph(dataset):
     datasets_links = {'lastfm':'https://www.dropbox.com/s/cslv0z7f3lkrbse/lastfm.npz', \
-    'cora':'', \
+    'cora':'https://www.dropbox.com/s/9u1m5sqrvn60u4k/cora.npz', \
     'blogcatalog':'', \
     'flickr':''}
     if dataset not in datasets_links:
