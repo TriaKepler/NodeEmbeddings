@@ -48,5 +48,5 @@ def similarity_matrix(graph, feat, sim_measures, weights):
             sim_matrix = pairwise_distances(feat, metric='cosine')
         else:
             raise Exception('Unkonwn similarity measure')
-        sim_matrices.append(weight * ft_matrix)
+        sim_matrices.append(weight * sim_matrix)
     return sum(sim_matrices)
