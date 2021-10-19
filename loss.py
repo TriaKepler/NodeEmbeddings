@@ -4,9 +4,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class CustomLoss(nn.Module):
-    def __init__(self, sim_matrix):
+    def __init__(self, sim_matrix, device):
         super(CustomLoss, self).__init__()
-        self.sim_matrix = torch.from_numpy(sim_matrix)
+        self.sim_matrix = torch.from_numpy(sim_matrix).to(device)
 
     def forward(self, inputs, indices):
         inputs_combn = combinations(inputs, 2)
