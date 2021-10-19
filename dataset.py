@@ -1,3 +1,4 @@
+import numpy as np
 from numpy.random import choice as rnd_choice
 import random as rnd
 from torch.utils.data import Dataset
