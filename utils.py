@@ -21,9 +21,9 @@ def load_npz(filepath):
         raise ValueError(f"{filepath} doesn't exist.")
 
 def load_graph(dataset):
-    datasets_links = {'lastfm':'https://www.dropbox.com/s/cslv0z7f3lkrbse/lastfm.npz', \
-    'cora':'https://www.dropbox.com/s/9u1m5sqrvn60u4k/cora.npz', \
-    'blogcatalog':'', \
+    datasets_links = {'lastfm':'https://www.dropbox.com/s/cslv0z7f3lkrbse/lastfm.npz',
+    'cora':'https://www.dropbox.com/s/9u1m5sqrvn60u4k/cora.npz',
+    'blogcatalog':'',
     'flickr':''}
     if dataset not in datasets_links:
         raise Exception("Unkonwn dataset")
