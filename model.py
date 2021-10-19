@@ -6,7 +6,7 @@ class Model(nn.Module):
     def __init__(self, emb_size, classes_num):
         super().__init__()
         self.embeddings = nn.Parameter(torch.randn(*emb_size))
-        self.fc = nn.Linear(emb_size[0], classes_num)
+        self.fc = nn.Linear(emb_size[1], classes_num)
 
     def forward(self, inputs):
         emb_list = [torch.sigmoid(torch.index_select(self.embeddings, 0, inp)) for inp in inputs]
