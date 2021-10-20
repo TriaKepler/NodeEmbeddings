@@ -17,7 +17,7 @@ def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, 
 
     total_step = len(train_loader)
     if verbose:
-        print(torch.sum(F.pairwise_distance(torch.sigmoid(model.embeddings),torch.sigmoid(torch.embeddings))**2 - (torch.from_numpy(sim_matrix)**2).to(device)))
+        print(torch.sum(F.pairwise_distance(torch.sigmoid(model.embeddings),torch.sigmoid(model.embeddings))**2 - (torch.from_numpy(sim_matrix)**2).to(device)))
     for epoch in range(num_epochs):
         for batch_idx, out in enumerate(train_loader):
             quad, label = out[0].to(device), out[1].to(device)
