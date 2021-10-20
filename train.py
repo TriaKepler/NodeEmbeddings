@@ -1,6 +1,7 @@
 import torch
 import torch.nn.functional as F
 import numpy as np
+from scipy.spatial import distance_matrix
 from node_emb.dataset import GraphDataset
 from node_emb.loss import CustomLoss
 from node_emb.model import Model
@@ -19,8 +20,10 @@ def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, 
     for epoch in range(num_epochs):
         if verbose:
             print("~"*50)
-            print(F.pairwise_distance(torch.sigmoid(model.embeddings),torch.sigmoid(model.embeddings)))
-            print(torch.sum((F.pairwise_distance(torch.sigmoid(model.embeddings),torch.sigmoid(model.embeddings)) - (torch.from_numpy(sim_matrix)).to(device))**2).item())
+            emb_numpy = torch.sigmoid(model.embeddings).data.cpu().detach().numpy()
+            print(np.sum(distance_matrix(emb_numpy)))
+            # print(F.pairwise_distance(,torch.sigmoid(model.embeddings)))
+            # print(torch.sum((F.pairwise_distance(torch.sigmoid(model.embeddings),torch.sigmoid(model.embeddings)) - (torch.from_numpy(sim_matrix)).to(device))**2).item())
             print("~"*50)
         for batch_idx, out in enumerate(train_loader):
             quad, label = out[0].to(device), out[1].to(device)
