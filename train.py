@@ -21,7 +21,7 @@ def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, 
         if verbose:
             print("~"*50)
             emb_numpy = torch.sigmoid(model.embeddings).data.cpu().detach().numpy()
-            euc_dist = distance_matrix(emb_numpy, emb_numpy)
+            euc_dist = distance_matrix(emb_numpy, emb_numpy, p=2)
             print("total error:", np.sum((euc_dist - sim_matrix) ** 2) / n_nodes ** 2)
             # print(F.pairwise_distance(,torch.sigmoid(model.embeddings)))
             # print(torch.sum((F.pairwise_distance(torch.sigmoid(model.embeddings),torch.sigmoid(model.embeddings)) - (torch.from_numpy(sim_matrix)).to(device))**2).item())
