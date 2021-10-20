@@ -19,6 +19,7 @@ def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, 
     for epoch in range(num_epochs):
         if verbose:
             print("~"*50)
+            print(torch.sigmoid(model.embeddings))
             print(torch.sum((F.pairwise_distance(torch.sigmoid(model.embeddings),torch.sigmoid(model.embeddings)) - (torch.from_numpy(sim_matrix)).to(device))**2).item())
             print("~"*50)
         for batch_idx, out in enumerate(train_loader):
