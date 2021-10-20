@@ -7,7 +7,7 @@ from node_emb.model import Model
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, batch_size=64, num_epochs=8, learning_rate=0.01):
+def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, batch_size=64, num_epochs=8, learning_rate=0.01, verbose=False):
     n_nodes = len(graph.nodes)
     train_dataset = GraphDataset(graph=graph, size=size, labels=labels)
     train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
@@ -16,6 +16,8 @@ def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, 
     criterion = CustomLoss(sim_matrix, device).to(device)
 
     total_step = len(train_loader)
+    if verbose:
+        print(torch.sum(F.pairwise_distance(torch.sigmoid(model.embeddings),torch.sigmoid(torch.embeddings))**2 - torch.from_numpy(sim_matrix)**2.to(device)))
     for epoch in range(num_epochs):
         for batch_idx, out in enumerate(train_loader):
             quad, label = out[0].to(device), out[1].to(device)
