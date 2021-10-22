@@ -36,7 +36,7 @@ def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, 
             label_ = label[torch.arange(emb_tensor.size(0)), idx].squeeze(0)
             loss2 = F.nll_loss(j, label_.squeeze(-1))
             loss1 = criterion(emb_list, quad)
-            loss = 0.9 * loss1 + 0.1 * loss2
+            loss = 0.5 * loss1 + 0.5 * loss2
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
