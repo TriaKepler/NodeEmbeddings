@@ -8,7 +8,7 @@ class GraphDataset(Dataset):
     def __init__(self, graph, size, labels):
         self.nodes_num = len(graph.nodes)
         self.graph = graph
-        self.edges = [[vi, vj] for vi, vj in self.graph.edges]
+        self.edges = [[data[0], data[1]] for data in self.graph.edges]
         self.len_edges = len(self.edges)
         self.size = size
         self.data = np.zeros((len(self), 4)).astype(np.int64)
