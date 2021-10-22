@@ -41,12 +41,12 @@ def similarity_matrix(graph, feat, sim_measures, weights):
     nodes_num = len(graph.nodes)
     sim_matrices = []
     for measure, weight in zip(sim_measures, weights):
-        if measure == 'shortest_path':
+        if measure == 'shortest_path' and weight != 0.0:
             sim_matrix = nx.floyd_warshall_numpy(graph)
             sim_matrix = 1 - np.divide(1, sim_matrix, out=np.zeros_like(sim_matrix), where=sim_matrix != 0)
-        elif measure == 'sim_rank':
+        elif measure == 'sim_rank' and weight != 0.0:
             sim_matrix = 1 - nx.simrank_similarity_numpy(graph, importance_factor=0.9, max_iterations=100, tolerance=0.01)
-        elif measure == 'features':
+        elif measure == 'features' and weight != 0.0:
             sim_matrix = pairwise_distances(feat, metric='cosine')
         else:
             raise Exception('Unkonwn similarity measure')
