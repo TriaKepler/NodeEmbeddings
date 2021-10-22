@@ -9,7 +9,7 @@ class Model(nn.Module):
         self.fc = nn.Linear(emb_size[1], classes_num)
 
     def forward(self, inputs):
-        emb_list = [(torch.index_select(self.embeddings, 0, inp)) for inp in inputs]
+        emb_list = [torch.tanh(torch.index_select(self.embeddings, 0, inp)) for inp in inputs]
         emb_tensor = torch.stack(emb_list, dim=1)
         return emb_list, emb_tensor
 
