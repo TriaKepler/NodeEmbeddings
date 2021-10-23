@@ -8,9 +8,9 @@ from node_emb.model import Model
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, batch_size=64, num_epochs=8, learning_rate=0.01, verbose=False):
+def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, batch_size=64, num_epochs=8, learning_rate=0.01, verbose=False, misc=False):
     n_nodes = len(graph.nodes)
-    train_dataset = GraphDataset(graph=graph, size=size, labels=labels)
+    train_dataset = GraphDataset(graph=graph, size=size, labels=labels, misc=misc)
     train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
     model = Model((n_nodes, depth), classes_num).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
