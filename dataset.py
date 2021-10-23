@@ -27,12 +27,12 @@ class GraphDataset(Dataset):
         for s in range(self.size):
             rnd.shuffle(self.edges)
             for i, edge in enumerate(tqdm(self.edges)):
-                if self.misc:
-                    if rnd.random() < 0.7:
-                        n1, n2 = edge
-                        n3, n4 = rnd_choice(self.nodes_num, 2, replace=False)
-                    else:
-                        n1, n2, n3, n4 = rnd_choice(self.nodes_num, 4, replace=False)
+                if self.misc and rnd.random() > 0.7:
+                    n1, n2, n3, n4 = rnd_choice(self.nodes_num, 4, replace=False)
+                else:
+                    n1, n2 = edge
+                    n3, n4 = rnd_choice(self.nodes_num, 2, replace=False
+                                        
                 for idx, node in enumerate([n1, n2, n3, n4]):
                     self.data[i + s * self.len_edges][idx] = node
                     self.labels[i + s * self.len_edges][idx] = self.main_labels[node]
