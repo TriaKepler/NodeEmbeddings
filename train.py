@@ -32,7 +32,7 @@ def train(graph, feat, labels, sim_matrix, depth=256, classes_num=None, size=5, 
             emb_list, emb_tensor = model([n1, n2, n3, n4])
             # idx = torch.zeros(1, emb_tensor.size(0)).long()
             idx = torch.randint(0, 4, (1, emb_tensor.size(0)))
-            j = model.feed_fc((emb_tensor[torch.arange(emb_tensor.size(0)), idx].squeeze(0)))
+            j = model.feed_fc(torch.sigmoid(emb_tensor[torch.arange(emb_tensor.size(0)), idx].squeeze(0)))
             label_ = label[torch.arange(emb_tensor.size(0)), idx].squeeze(0)
             loss2 = F.nll_loss(j, label_.squeeze(-1))
             loss1 = criterion(emb_list, quad)
