@@ -13,7 +13,7 @@ class CustomLoss(nn.Module):
         indices_combn = combinations(range(len(inputs)), 2)
         loss = 0.0
         for inp, idx in zip(inputs_combn, indices_combn):
-            distance = F.pairwise_distance(inp[0], inp[1], 2)
+            distance = torch.tanh(F.pairwise_distance(inp[0], inp[1], 2))
             similarity = (self.sim_matrix[indices[:, idx[0]], indices[:, idx[1]]])
             loss += (distance - similarity) ** 2
         return loss.mean()
