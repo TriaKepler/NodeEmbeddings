@@ -24,7 +24,8 @@ def load_graph(dataset):
     datasets_links = {'lastfm':'https://www.dropbox.com/s/cslv0z7f3lkrbse/lastfm.npz',
     'cora':'https://www.dropbox.com/s/9u1m5sqrvn60u4k/cora.npz',
     'blogcatalog':'https://www.dropbox.com/s/t829qjpkvwzc7v2/blogcatalog.npz',
-    'flickr':'https://www.dropbox.com/s/p5k8a5rpj5bhbtz/flickr.npz'}
+    'flickr':'https://www.dropbox.com/s/p5k8a5rpj5bhbtz/flickr.npz',
+    'mit': 'https://www.dropbox.com/s/ssmtf9kpc2zqh5h/mit.npz'}
     if dataset not in datasets_links:
         raise Exception("Unkonwn dataset")
     else:
