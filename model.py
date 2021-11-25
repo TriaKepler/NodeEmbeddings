@@ -11,6 +11,7 @@ class Model(nn.Module):
     def forward(self, inputs):
         emb_list = [torch.tanh(torch.index_select(self.embeddings, 0, inp)) for inp in inputs]
         emb_tensor = torch.stack(emb_list, dim=1)
+        print(f"emb_tensor size: {emb_tensor.size}")
         return emb_list, emb_tensor
 
     def feed_fc(self, inputs):
